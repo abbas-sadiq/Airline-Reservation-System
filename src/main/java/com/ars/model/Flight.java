@@ -11,7 +11,7 @@ public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long flightId;
+    private long id;
 
     @NotNull
     @Column(unique = true)
@@ -50,13 +50,12 @@ public class Flight {
     public Flight() {
     }
 
-    // Getters and Setters
-    public long getFlightId() {
-        return flightId;
+    public long getId() {
+        return id;
     }
 
-    public void setFlightId(long flightId) {
-        this.flightId = flightId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFlightNumber() {
