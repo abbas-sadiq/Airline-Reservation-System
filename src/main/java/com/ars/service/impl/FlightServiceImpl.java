@@ -1,6 +1,8 @@
 package com.ars.service.impl;
 
 
+import com.ars.dto.FlightDto;
+import com.ars.mapper.FlightMapper;
 import com.ars.model.Flight;
 import com.ars.repository.FlightRepository;
 import com.ars.service.FlightService;
@@ -13,12 +15,14 @@ import java.util.List;
 @Service
 public class FlightServiceImpl implements FlightService {
 
-    @Autowired
-    private FlightRepository flightRepository;
+    @Autowired private FlightMapper flightMapper;
+    @Autowired private FlightRepository flightRepository;
 
     @Override
-    public Flight addFlight(Flight flight) {
-        return flightRepository.save(flight);
+
+    public FlightDto addFlight(Flight flight) {
+        Flight entity = flightRepository.save(flight);
+        return flightMapper.map(entity);
     }
     @Override
     public Flight updateFlight(long flightId, Flight flight) {

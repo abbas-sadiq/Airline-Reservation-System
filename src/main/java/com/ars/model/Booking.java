@@ -20,8 +20,7 @@ public class Booking {
     private long flightId;
 
     @NotNull
-    @Temporal(TemporalType.DATE) // Specifies the format of the Date
-    private Date date;
+    private String date;
 
     // Default Constructor
     public Booking() {
@@ -44,11 +43,7 @@ public class Booking {
         this.flightId = flightId;
     }
 
-    public Date getDate() { // Fixed return type
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+
+
 }

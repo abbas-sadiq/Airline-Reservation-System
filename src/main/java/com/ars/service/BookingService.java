@@ -1,4 +1,4 @@
 package com.ars.service;
 
-public class BookingService {
+public interface BookingService {
 }

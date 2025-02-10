@@ -1,4 +1,4 @@
 package com.ars.service;
 
-public class UserService {
+public interface UserService {
 }
