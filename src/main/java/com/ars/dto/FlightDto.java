@@ -1,44 +1,20 @@
 package com.ars.dto;
 
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class FlightDto {
-
-    private String flightName;
-    private String flightDate;
-    private String flightTime;
-
-    public String getFlightName() {
-        return flightName;
-    }
-
-    public void setFlightName(String flightName) {
-        this.flightName = flightName;
-    }
-
-    public String getFlightDate() {
-        return flightDate;
-    }
-
-    public void setFlightDate(String flightDate) {
-        this.flightDate = flightDate;
-    }
-
-    public String getFlightTime() {
-        return flightTime;
-    }
-
-    public void setFlightTime(String flightTime) {
-        this.flightTime = flightTime;
-    }
-
-    public String getFlightSeatNumber() {
-        return flightSeatNumber;
-    }
-
-    public void setFlightSeatNumber(String flightSeatNumber) {
-        this.flightSeatNumber = flightSeatNumber;
-    }
-
-    private String flightSeatNumber;
-
-
+    private Long id;
+    private String airline;
+    private String source;
+    private String destination;
+    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
+    private int availableSeats;
+    private double price;
 }

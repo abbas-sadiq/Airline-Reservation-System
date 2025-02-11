@@ -1,67 +1,41 @@
 package com.ars.service.impl;
 
-
 import com.ars.dto.FlightDto;
 import com.ars.mapper.FlightMapper;
 import com.ars.model.Flight;
 import com.ars.repository.FlightRepository;
-import com.ars.service.FlightService;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class FlightServiceImpl implements FlightService {
+@RequiredArgsConstructor
+public class FlightServiceImpl {
+    private final FlightRepository flightRepository;
+    private final FlightMapper flightMapper;
 
-    @Autowired private FlightMapper flightMapper;
-    @Autowired private FlightRepository flightRepository;
-
-    @Override
-
-    public FlightDto addFlight(Flight flight) {
-        Flight entity = flightRepository.save(flight);
-        return flightMapper.map(entity);
-    }
-    @Override
-    public Flight updateFlight(long flightId, Flight flight) {
-        flight.setId(flightId);
-        return flightRepository.save(flight);
+    public List<FlightDto> getAllFlights() {
+        return flightRepository.findAll()
+                .stream()
+                .map(flightMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Flight> getAllFlights() {
-        return flightRepository.findAll();
-    }
-    @Override
-    public Flight getFlightById(long flightId) {
-        flightId = flightRepository.findById(flightId).get().getId();
-        return flightRepository.findById(flightId).get();
-    }
-    @Override
-    public List<Flight> searchFlight(String source, String destination) {
-        return flightRepository.findBySourceAndDestination(source, destination);
+    public FlightDto getFlightById(Long id) {
+        Flight flight = flightRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Flight not found with ID: " + id));
+        return flightMapper.toDto(flight);
     }
 
-    @Override
-    public boolean checkSeatAvailability(long flightId , int requestedSeats){
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new RuntimeException("Flight not found"));
-        return flight.getAvailableSeats() >= requestedSeats;
-
+    public FlightDto addFlight(FlightDto flightDto) {
+        Flight flight = flightMapper.toEntity(flightDto);
+        Flight savedFlight = flightRepository.save(flight);
+        return flightMapper.toDto(savedFlight);
     }
 
-    @Override
-    public void deleteFlight(long flightId) {
-        if (!flightRepository.existsById(flightId)) {
-            throw new EntityNotFoundException("Flight not found with ID: " + flightId);
-        }
-        flightRepository.deleteById(flightId);
+    public void deleteFlight(Long id) {
+        flightRepository.deleteById(id);
     }
-
-
-
-
-
 }

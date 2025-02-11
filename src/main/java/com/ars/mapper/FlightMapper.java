@@ -6,10 +6,29 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FlightMapper {
-    public FlightDto map(Flight entity) {
-        return null;
+    public FlightDto toDto(Flight flight) {
+        return FlightDto.builder()
+                .id(flight.getId())
+                .airline(flight.getAirline())
+                .source(flight.getSource())
+                .destination(flight.getDestination())
+                .departureTime(flight.getDepartureTime())
+                .arrivalTime(flight.getArrivalTime())
+                .availableSeats(flight.getAvailableSeats())
+                .price(flight.getPrice())
+                .build();
     }
-    public Flight map(FlightDto dto) {
-        return null;
+
+    public Flight toEntity(FlightDto dto) {
+        return Flight.builder()
+                .id(dto.getId())
+                .airline(dto.getAirline())
+                .source(dto.getSource())
+                .destination(dto.getDestination())
+                .departureTime(dto.getDepartureTime())
+                .arrivalTime(dto.getArrivalTime())
+                .availableSeats(dto.getAvailableSeats())
+                .price(dto.getPrice())
+                .build();
     }
 }
