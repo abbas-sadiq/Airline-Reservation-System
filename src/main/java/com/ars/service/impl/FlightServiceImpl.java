@@ -1,41 +1,28 @@
 package com.ars.service.impl;
 
-import com.ars.dto.FlightDto;
-import com.ars.mapper.FlightMapper;
+import com.ars.dto.FlightDTO;
 import com.ars.model.Flight;
+import com.ars.mapper.FlightMapper;
 import com.ars.repository.FlightRepository;
-import lombok.RequiredArgsConstructor;
+import com.ars.service.FlightService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
-@RequiredArgsConstructor
-public class FlightServiceImpl {
-    private final FlightRepository flightRepository;
-    private final FlightMapper flightMapper;
+public class FlightServiceImpl implements FlightService {
+    @Autowired
+    private FlightRepository flightRepository;
 
-    public List<FlightDto> getAllFlights() {
-        return flightRepository.findAll()
-                .stream()
-                .map(flightMapper::toDto)
-                .collect(Collectors.toList());
+    @Override
+    public FlightDTO getFlightById(Long flightId) {
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
+        return FlightMapper.toDTO(flight);
     }
 
-    public FlightDto getFlightById(Long id) {
-        Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Flight not found with ID: " + id));
-        return flightMapper.toDto(flight);
-    }
-
-    public FlightDto addFlight(FlightDto flightDto) {
-        Flight flight = flightMapper.toEntity(flightDto);
-        Flight savedFlight = flightRepository.save(flight);
-        return flightMapper.toDto(savedFlight);
-    }
-
-    public void deleteFlight(Long id) {
-        flightRepository.deleteById(id);
+    @Override
+    public FlightDTO saveFlight(FlightDTO flightDTO) {
+        Flight flight = FlightMapper.toEntity(flightDTO);
+        flight = flightRepository.save(flight);
+        return FlightMapper.toDTO(flight);
     }
 }

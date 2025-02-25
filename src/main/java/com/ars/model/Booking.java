@@ -1,49 +1,30 @@
 package com.ars.model;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
-
-import java.util.Date;
 
 @Entity
-@Table(name = "bookings") // Updated table name for better convention
+@Table(name = "bookings")
 public class Booking {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne
+    @JoinColumn(name = "user_user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "flight_flight_id")
+    private Flight flight;
+    private String seatNumber;
 
-    @NotNull
-    private int userId;
+    public int getId() { return id; }
+    public void setId(int bookingId) { this.id = bookingId; }
 
-    @NotNull
-    private long flightId;
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
-    @NotNull
-    private String date;
+    public Flight getFlight() { return flight; }
+    public void setFlight(Flight flight) { this.flight = flight; }
 
-    // Default Constructor
-    public Booking() {
-    }
-
-    // Getters and Setters
-    public int getId() {
-        return id;
-    }
-
-
-
-
-
-    public long getFlightId() {
-        return flightId;
-    }
-
-    public void setFlightId(long flightId) {
-        this.flightId = flightId;
-    }
-
-
-
-
+    public String getSeatNumber() { return seatNumber; }
+    public void setSeatNumber(String seatNumber) { this.seatNumber = seatNumber; }
 }

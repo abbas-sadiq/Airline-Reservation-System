@@ -1,4 +1,10 @@
 package com.ars.repository;
 
-public interface UserRepository {
+import com.ars.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByUsername(String username);
+    User findByEmail(String email);
+
 }

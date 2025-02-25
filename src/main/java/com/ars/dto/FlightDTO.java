@@ -1,20 +1,13 @@
-package com.ars.model;
+package com.ars.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Flight {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FlightDTO {
     private Long flightId;
     private String flightNumber;
     private String departureCity;
     private String destinationCity;
     private int availableSeats;
+
+    // Getters and Setters
     public Long getFlightId() { return flightId; }
     public void setFlightId(Long flightId) { this.flightId = flightId; }
 
