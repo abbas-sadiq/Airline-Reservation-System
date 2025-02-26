@@ -2,7 +2,6 @@ package com.ars.controller;
 
 import com.ars.dto.BookingDTO;
 import com.ars.service.BookingService;
-import com.ars.service.impl.BookingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/bookings")
 public class BookingController {
     @Autowired
-    private BookingServiceImpl bookingService;
+    private BookingService bookingService;
 
     @GetMapping("/{bookingId}")
     public ResponseEntity<BookingDTO> getBooking(@PathVariable int bookingId) {
