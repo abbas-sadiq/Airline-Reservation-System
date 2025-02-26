@@ -8,7 +8,6 @@ public class FlightDTO {
     private String destinationCity;
     private int availableSeats;
 
-    // Getters and Setters
     public Long getFlightId() { return flightId; }
     public void setFlightId(Long flightId) { this.flightId = flightId; }
 
