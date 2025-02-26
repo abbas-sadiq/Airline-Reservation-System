@@ -2,6 +2,7 @@ package com.ars.dto;
 
 public class FlightDTO {
     private Long flightId;
+
     private String flightNumber;
     private String departureCity;
     private String destinationCity;
