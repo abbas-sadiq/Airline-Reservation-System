@@ -1,5 +1,7 @@
 package com.ars.dto;
 
+import jakarta.annotation.Nonnull;
+
 public class UserDTO {
     private int userId;
     private String name;

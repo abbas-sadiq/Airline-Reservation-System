@@ -1,6 +1,7 @@
 package com.ars.service.impl;
 
 import com.ars.dto.FlightDTO;
+import com.ars.exceptions.FlightNotFoundException;
 import com.ars.model.Flight;
 import com.ars.mapper.FlightMapper;
 import com.ars.repository.FlightRepository;
@@ -15,7 +16,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public FlightDTO getFlightById(Long flightId) {
-        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new FlightNotFoundException("Flight not found ID : " + flightId));
         return FlightMapper.toDTO(flight);
     }
 
