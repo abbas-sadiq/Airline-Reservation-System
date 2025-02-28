@@ -27,14 +27,14 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO getBookingById(int id) {
-        Booking booking = bookingRepository.findById(id).orElseThrow(()-> new RuntimeException("Booking not found"));
+        Booking booking = bookingRepository.findById(id).orElseThrow(()-> new ApiException("Booking not found"));
         return BookingMapper.toDTO(booking);
     }
 
     @Override
     public BookingDTO saveBooking(BookingDTO bookingDTO) {
         User user = userRepository.findById(bookingDTO.getUserId()).orElseThrow(() -> new ApiException("User not found ID: " + bookingDTO.getUserId()));
-        Flight flight = flightRepository.findById(bookingDTO.getFlightId()).orElseThrow(() -> new FlightNotFoundException("Flight not found ID: " + bookingDTO.getFlightId()));
+        Flight flight = flightRepository.findById(bookingDTO.getFlightId()).orElseThrow(() -> new ApiException("Flight not found ID: " + bookingDTO.getFlightId()));
         Booking booking = BookingMapper.toEntity(bookingDTO, user, flight);
         booking = bookingRepository.save(booking);
         return BookingMapper.toDTO(booking);

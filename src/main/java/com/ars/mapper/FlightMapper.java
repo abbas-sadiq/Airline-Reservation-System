@@ -16,7 +16,6 @@ public class FlightMapper {
 
     public static Flight toEntity(FlightDTO dto) {
         Flight flight = new Flight();
-        flight.setFlightId(dto.getFlightId());
         flight.setFlightNumber(dto.getFlightNumber());
         flight.setDepartureCity(dto.getDepartureCity());
         flight.setDestinationCity(dto.getDestinationCity());
