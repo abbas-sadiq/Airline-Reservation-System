@@ -1,7 +1,6 @@
 package com.ars.service.impl;
 
 import com.ars.dto.BookingDTO;
-import com.ars.exceptions.FlightNotFoundException;
 import com.ars.exceptions.ApiException;
 import com.ars.model.Booking;
 import com.ars.model.User;
