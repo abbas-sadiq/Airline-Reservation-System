@@ -25,6 +25,6 @@ public class BookingController {
     }
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<String> handleUserNotFoundException(ApiException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Message: " + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST ).body("Message: " + ex.getMessage());
     }
 }
