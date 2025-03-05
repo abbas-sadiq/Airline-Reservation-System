@@ -3,11 +3,10 @@ package com.ars.controller;
 import com.ars.dto.FlightDTO;
 import com.ars.exceptions.ApiException;
 import com.ars.service.impl.FlightServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;//03455953944
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/flights")
 public class FlightController {
@@ -25,6 +24,6 @@ public class FlightController {
     }
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<String> handleUserNotFoundException(ApiException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Message: " + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Message: "+ ex.getMessage());
     }
 }
