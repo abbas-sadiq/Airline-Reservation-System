@@ -34,7 +34,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Message: " + ex.getMessage());
     }
     @GetMapping
-    public ResponseEntity<UserDTO> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

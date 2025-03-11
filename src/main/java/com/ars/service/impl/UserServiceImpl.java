@@ -47,10 +47,11 @@ public class UserServiceImpl implements UserService {
         List<User> savedUsers = userRepository.saveAll(users);
         return savedUsers.stream().map(UserMapper::toDTO).collect(Collectors.toList());
     }
-
-
-    public UserDTO getAllUsers() {
-        User user = userRepository.findAll().stream().findFirst().orElseThrow(() -> new ApiException("User not found"));
-        return UserMapper.toDTO(user);
+    public List<UserDTO> getAllUsers(){
+        List<User> users = userRepository.findAll();
+        if(users.isEmpty()){
+            throw  new ApiException("User not found");
+        }
+        return users.stream().map(UserMapper::toDTO).collect(Collectors.toList());
     }
 }
