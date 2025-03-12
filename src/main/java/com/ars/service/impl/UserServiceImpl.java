@@ -25,10 +25,10 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO saveUser(UserDTO userDTO) {
         if(userRepository.existsByUsername(userDTO.getName())){
-            throw  new IllegalArgumentException("Username already exists!");
+            throw  new ApiException("Username already exists!");
         }
         if(userRepository.existsByEmail(userDTO.getEmail())){
-            throw  new IllegalArgumentException("Email already exists!");
+            throw  new ApiException("Email already exists!");
         }
         User user = UserMapper.toEntity(userDTO);
         user = userRepository.save(user);
@@ -47,10 +47,26 @@ public class UserServiceImpl implements UserService {
         List<User> savedUsers = userRepository.saveAll(users);
         return savedUsers.stream().map(UserMapper::toDTO).collect(Collectors.toList());
     }
+    public List<UserDTO> getAllUsers(){
+        List<User> users = userRepository.findAll();
+        if(users.isEmpty()){
+            throw  new ApiException("User not found");
+        }
+        return users.stream().map(UserMapper::toDTO).collect(Collectors.toList());
+    }
 
+    public UserDTO updateUser(int userId, UserDTO userDTO) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException("User not found ID: " + userId));
 
-    public UserDTO getAllUsers() {
-        User user = userRepository.findAll().stream().findFirst().orElseThrow(() -> new ApiException("User not found"));
+        user.setUsername(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(userDTO.getRole());
+
+        user = userRepository.save(user);
+
         return UserMapper.toDTO(user);
     }
+
 }

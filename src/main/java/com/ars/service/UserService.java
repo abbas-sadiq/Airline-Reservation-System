@@ -8,6 +8,7 @@ public interface UserService {
     UserDTO getUserById(int userId);
     UserDTO saveUser(UserDTO userDTO);
     List<UserDTO>addMultipleUsers(List<UserDTO> userDTOList);
-    UserDTO getAllUsers(List<UserDTO> userDTOList);
+    List<UserDTO> getAllUsers();
+    UserDTO updateUser(int userId, UserDTO userDTO);
 
 }
