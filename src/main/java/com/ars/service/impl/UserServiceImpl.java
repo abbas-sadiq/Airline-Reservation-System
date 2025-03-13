@@ -2,6 +2,7 @@ package com.ars.service.impl;
 
 import com.ars.dto.UserDTO;
 import com.ars.exceptions.ApiException;
+import com.ars.exceptions.ApiResponse;
 import com.ars.model.User;
 import com.ars.mapper.UserMapper;
 import com.ars.repository.UserRepository;
@@ -52,10 +53,10 @@ public class UserServiceImpl implements UserService {
         if(users.isEmpty()){
             throw  new ApiException("User not found");
         }
-        return users.stream().map(UserMapper::toDTO).collect(Collectors.toList());
+        return new ApiResponse<>(true, users.stream().map(UserMapper::toDTO).collect(Collectors.toList()),null).getData();
     }
 
-    public UserDTO updateUser(int userId, UserDTO userDTO) {
+    public  UserDTO updateUser(int userId, UserDTO userDTO) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException("User not found ID: " + userId));
 
