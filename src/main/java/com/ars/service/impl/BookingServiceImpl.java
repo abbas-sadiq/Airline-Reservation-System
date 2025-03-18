@@ -2,6 +2,7 @@ package com.ars.service.impl;
 
 import com.ars.dto.BookingDTO;
 import com.ars.exceptions.ApiException;
+import com.ars.exceptions.ErrorInfo;
 import com.ars.model.Booking;
 import com.ars.model.User;
 import com.ars.model.Flight;
@@ -26,14 +27,14 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO getBookingById(int id) {
-        Booking booking = bookingRepository.findById(id).orElseThrow(()-> new ApiException("Booking not found"));
+        Booking booking = bookingRepository.findById(id).orElseThrow(()-> new ApiException(new ErrorInfo(404,"Booking not found")));
         return BookingMapper.toDTO(booking);
     }
 
     @Override
     public BookingDTO saveBooking(BookingDTO bookingDTO) {
-        User user = userRepository.findById(bookingDTO.getUserId()).orElseThrow(() -> new ApiException("User not found ID: " + bookingDTO.getUserId()));
-        Flight flight = flightRepository.findById(bookingDTO.getFlightId()).orElseThrow(() -> new ApiException("Flight not found ID: " + bookingDTO.getFlightId()));
+        User user = userRepository.findById(bookingDTO.getUserId()).orElseThrow(() -> new ApiException(new ErrorInfo(404,"User not found ID: " + bookingDTO.getUserId())));
+        Flight flight = flightRepository.findById(bookingDTO.getFlightId()).orElseThrow(() -> new ApiException(new ErrorInfo(404,"Flight not found ID: " + bookingDTO.getFlightId())));
         Booking booking = BookingMapper.toEntity(bookingDTO, user, flight);
         booking = bookingRepository.save(booking);
         return BookingMapper.toDTO(booking);
