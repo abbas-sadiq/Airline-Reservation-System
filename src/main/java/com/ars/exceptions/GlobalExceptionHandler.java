@@ -1,5 +1,4 @@
 package com.ars.exceptions;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ApiResponse<ErrorInfo>> handleApiException(ApiException ex) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND, 404, ex.getMessage());
+        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getErrorInfo().getErrorCode(), ex.getErrorInfo().getErrorMessage());
     }
 
     @ExceptionHandler(NoSuchElementException.class)

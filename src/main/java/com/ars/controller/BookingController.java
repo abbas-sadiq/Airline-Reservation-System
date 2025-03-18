@@ -26,8 +26,4 @@ public class BookingController {
         BookingDTO createBooking= bookingService.saveBooking(bookingDTO);
         return ResponseEntity.ok(new ApiResponse<>(true, createBooking, null));
     }
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> handleUserNotFoundException(ApiException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST ).body("Message: " + ex.getMessage());
-    }
 }

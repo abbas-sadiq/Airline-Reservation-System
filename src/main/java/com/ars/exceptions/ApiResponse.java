@@ -11,6 +11,17 @@ public class ApiResponse<T> {
     private T data;
     private ErrorInfo error;
 
+    public ApiResponse(T data) {
+        this.success = true;
+        this.data = data;
+        this.error = null;
+    }
+
+    public ApiResponse(ErrorInfo error) {
+        this.success = false;
+        this.data = null;
+        this.error = error;
+    }
 
     public void setSuccess(boolean success) {
         this.success = success;

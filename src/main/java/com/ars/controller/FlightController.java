@@ -25,8 +25,4 @@ public class FlightController {
         FlightDTO createFlight = flightService.saveFlight(flightDTO);
        return ResponseEntity.ok(new ApiResponse<>(true, createFlight,null));
     }
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> handleUserNotFoundException(ApiException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Message: "+ ex.getMessage());
-    }
 }
