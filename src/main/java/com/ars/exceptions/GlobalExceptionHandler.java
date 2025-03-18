@@ -11,26 +11,28 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private ResponseEntity<ApiResponse<ErrorInfo>> buildErrorResponse(HttpStatus status, int errorCode, String message) {
+        ApiResponse<ErrorInfo> response = new ApiResponse<>(false, null, new ErrorInfo(errorCode, message));
+        return new ResponseEntity<>(response, new HttpHeaders(), status);
+    }
+
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<ApiResponse<String>> handleApiException(ApiException ex) {
-        ApiResponse<String> response = new ApiResponse<>(false, null, ex.getMessage());
-        return new ResponseEntity<>(response,new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ApiResponse<ErrorInfo>> handleApiException(ApiException ex) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND, 404, ex.getMessage());
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex) {
-        ApiResponse<String> response = new ApiResponse<>(false, null, "Resource not found: " + ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<ErrorInfo>> handleNoSuchElementException(NoSuchElementException ex) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND, 404, "Resource not found: " + ex.getMessage());
     }
+
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiResponse<String>> handleIllegalArgumentException(IllegalArgumentException ex) {
-        ApiResponse<String> response = new ApiResponse<>(false, null, "Invalid request: " + ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ApiResponse<ErrorInfo>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, 400, "Invalid request: " + ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<String>> handleGlobalException(Exception ex) {
-        ApiResponse<String> response = new ApiResponse<>(false, null, "Unexpected error: " + ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ApiResponse<ErrorInfo>> handleGlobalException(Exception ex) {
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, 500, "Unexpected error: " + ex.getMessage());
     }
 }

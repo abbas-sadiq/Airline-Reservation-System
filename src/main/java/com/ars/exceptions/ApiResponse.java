@@ -9,7 +9,7 @@ import lombok.Data;
 public class ApiResponse<T> {
     private boolean success;
     private T data;
-    private String error;
+    private ErrorInfo error;
 
 
     public void setSuccess(boolean success) {
@@ -20,7 +20,7 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public void setError(String error) {
+    public void setError(ErrorInfo error) {
         this.error = error;
     }
 }

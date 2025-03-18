@@ -3,6 +3,7 @@ package com.ars.controller;
 import com.ars.dto.UserDTO;
 import com.ars.exceptions.ApiException;
 import com.ars.exceptions.ApiResponse;
+import com.ars.exceptions.ErrorInfo;
 import com.ars.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,10 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResponse<UserDTO>> getUser(@PathVariable int userId) {
         UserDTO getUser = userService.getUserById(userId);
+        if(getUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(false, null, new ErrorInfo(404, "User not found")));
+        }
         return ResponseEntity.ok(new ApiResponse<>(true, getUser, null));
     }
     @PostMapping
@@ -47,7 +52,7 @@ public class UserController {
         UserDTO updatedUser = userService.updateUser(userId,userDTO);
         if(updatedUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiResponse<>(false, null, "User not found"));
+                    .body(new ApiResponse<>(false, null, new ErrorInfo(404, "User not found")));
         }
         return ResponseEntity.ok(new ApiResponse<>(true, updatedUser, null));
     }
