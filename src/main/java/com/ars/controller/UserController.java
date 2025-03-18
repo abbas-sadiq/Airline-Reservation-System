@@ -38,10 +38,6 @@ public class UserController {
         return ResponseEntity.ok(new ApiResponse<>(true, addUsers, null));
     }
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> handleUserNotFoundException(ApiException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Message: " + ex.getMessage());
-    }
     @GetMapping
     public ResponseEntity<ApiResponse<List<UserDTO>>> getAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
